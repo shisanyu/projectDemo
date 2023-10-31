@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程</title>
+</head>
+<body>
+
+<h2>JavaScript 类的方法</h2>
+
+<p>类中如何定义方法</p>
+
+<p id="demo"></p>
+
+<script>
+class Runoob {
+  constructor(config) {
+    this.name = config.name;
+    this.year = config.year;
+    this.localTemplate = config.localTemplate || null
+  }
+  createEvent() {
+    this.age()
+  }
+  age() {
+    // console.log(this.localTemplate);
+    console.log('同样进入1');
+  }
+//   names() {
+    
+//     this.fn = '十三'
+//   }
+}
+
+let localTemplate={
+        insuranceInformationTextList:[1,2,4],
+        insuranceInformationFileList:[2,4,3,2,6]
+    }
+
+class Children  extends Runoob {
+    constructor(obj) {
+        super(obj)
+    }
+  age(list,num) {
+    // console.log(list.indexOf(num))
+    console.log('同样进入2');
+  }
+
+//   sex() {
+//     return this.fn
+//   }
+}
+ 
+// let runooba = new Runoob("菜鸟教程", 2018);
+// // runooba.names()
+let arr = [1,2,3,4,1,4]
+let runoob = new Children({name:'十三鱼',year:'18',localTemplate});
+
+runoob.createEvent()
+// document.getElementById("demo").innerHTML =
+// "菜鸟教程 " + runoob.age() + " 岁了。";
+</script>
+
+</body>
+</html>
