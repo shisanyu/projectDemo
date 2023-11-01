@@ -1,65 +1,160 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>菜鸟教程</title>
+  <meta charset="utf-8">
+  <title>菜鸟教程</title>
 </head>
+
 <body>
 
-<h2>JavaScript 类的方法</h2>
+  <h2>JavaScript 类的方法</h2>
 
-<p>类中如何定义方法</p>
+  <p>类中如何定义方法</p>
 
-<p id="demo"></p>
+  <p id="demo"></p>
 
-<script>
-class Runoob {
-  constructor(config) {
-    this.name = config.name;
-    this.year = config.year;
-    this.localTemplate = config.localTemplate || null
-  }
-  createEvent() {
-    this.age()
-  }
-  age() {
-    // console.log(this.localTemplate);
-    console.log('同样进入1');
-  }
-//   names() {
-    
-//     this.fn = '十三'
-//   }
-}
+  <script>
+    class Runoob {
+      constructor(config) {
+        this.name = config.name;
+        this.year = config.year;
+        this.localTemplate = config.localTemplate || null
+      }
+      createEvent() {
+        this.age()
+      }
+      age() {
+        // console.log(this.localTemplate);
+        console.log('同样进入1');
+      }
+      //   names() {
 
-let localTemplate={
-        insuranceInformationTextList:[1,2,4],
-        insuranceInformationFileList:[2,4,3,2,6]
+      //     this.fn = '十三'
+      //   }
     }
 
-class Children  extends Runoob {
-    constructor(obj) {
+    let localTemplate = {
+      insuranceInformationTextList: [1, 2, 4],
+      insuranceInformationFileList: [2, 4, 3, 2, 6]
+    }
+
+    class Children extends Runoob {
+      constructor(obj) {
         super(obj)
+      }
+      age(list, num) {
+        // console.log(list.indexOf(num))
+        console.log('同样进入2');
+      }
+
+      //   sex() {
+      //     return this.fn
+      //   }
     }
-  age(list,num) {
-    // console.log(list.indexOf(num))
-    console.log('同样进入2');
-  }
 
-//   sex() {
-//     return this.fn
-//   }
-}
- 
-// let runooba = new Runoob("菜鸟教程", 2018);
-// // runooba.names()
-let arr = [1,2,3,4,1,4]
-let runoob = new Children({name:'十三鱼',year:'18',localTemplate});
+    // let runooba = new Runoob("菜鸟教程", 2018);
+    // // runooba.names()
+    let arr = [1, 2, 3, 4, 1, 4]
+    let runoob = new Children({ name: '十三鱼', year: '18', localTemplate });
 
-runoob.createEvent()
-// document.getElementById("demo").innerHTML =
-// "菜鸟教程 " + runoob.age() + " 岁了。";
-</script>
+    runoob.createEvent()
+    // document.getElementById("demo").innerHTML =
+    // "菜鸟教程 " + runoob.age() + " 岁了。";
+
+
+    /**
+     * 在排除精度干扰情况下 `num.toFixed(fractionDigits)` 的值
+     *
+     * @param {number} num 原始数值
+     *
+     * @param {number=} fractionDigits 保留小数位位数
+     */
+    function toFixed(num, fractionDigits) {
+
+      if (isNaN(num) || typeof num !== 'number') return num
+      // console.log(num.toString())
+
+      if (Number.isInteger(num)) return num.toFixed(fractionDigits)
+
+      let isMinus = false
+      num = parseFloat(num)
+
+      if (num < 0) {
+        isMinus = true
+      }
+
+      num = isMinus ? Math.abs(num) : num
+      let final = Math.round(num * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits)
+
+      return isMinus ? final * -1 : final
+    }
+
+    console.log(toFixed(-99.999, 2))
+
+
+
+
+
+
+
+    const isInteger = Number.isInteger || function isIntegerHelper(value) {
+      return isNumber(value) && isFinite(value) && Math.floor(value) === value
+    }
+
+    /**
+     * 在排除精度干扰情况下 `num.toFixed(fractionDigits)` 的值
+     *
+     * @param {number} num 原始数值
+     *
+     * @param {number=} fractionDigits 保留小数位位数
+     */
+    function toFixed1(num, fractionDigits) {
+      if (isNaN(num = +num)) return NaN
+
+      if (isNaN(fractionDigits = +fractionDigits)) {
+        fractionDigits = 2
+      }
+
+      if (isInteger(num)) {
+        return num.toFixed(fractionDigits)
+      }
+
+      const numStr = num.toString()
+      const numSplits = numStr.split('.')
+
+      const integerLength = numSplits[0].length
+      const decimalLength = numSplits[1].length
+      const targetlength = integerLength + fractionDigits + 1
+
+      if (decimalLength <= fractionDigits) {
+        return numStr.padEnd(targetlength, '0')
+      }
+
+      let result = ''
+      let c = +numStr.charAt(targetlength) > 4 ? 1 : 0
+
+      for (let idx = targetlength - 1; idx >= 0; idx--) {
+        const char = numStr.charAt(idx)
+
+        let n = +char
+        if (isNaN(n)) {
+          result = char + result
+          continue
+        }
+
+        n += c
+        result = n + result
+
+        c = n > 9 ? 1 : 0
+      }
+
+      return result
+    }
+
+    console.log(toFixed1(-99.999, 2))
+  </script>
 
 </body>
+
 </html>
